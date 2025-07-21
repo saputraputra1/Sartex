@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Chat | WhatsApp Turbo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon.png">
+</head>
+<body class="light-mode">
+    <div class="app-container">
+        <header class="chat-header">
+            <button class="back-button" onclick="window.location='index.html'">←</button>
+            <div class="chat-info">
+                <h2 id="groupName">Group Chat</h2>
+                <p id="groupMembers">0 members</p>
+            </div>
+            <button class="menu-button" id="groupMenuButton">⋮</button>
+        </header>
+        
+        <div class="group-sidebar" id="groupSidebar">
+            <div class="sidebar-header">
+                <h3>Group Members</h3>
+                <button class="close-sidebar" id="closeSidebar">×</button>
+            </div>
+            <ul id="membersList">
+                <!-- Members will appear here -->
+            </ul>
+            <div class="sidebar-actions">
+                <button id="inviteMemberButton">Invite Member</button>
+                <button id="leaveGroupButton">Leave Group</button>
+                <button id="deleteGroupButton" class="admin-only">Delete Group</button>
+            </div>
+        </div>
+        
+        <div class="chat-container" id="chatContainer">
+            <!-- Messages will appear here -->
+        </div>
+        
+        <div class="message-input-container">
+            <button class="emoji-button">😊</button>
+            <input type="text" id="messageInput" placeholder="Type a message...">
+            <button class="send-button" id="sendButton">➤</button>
+            <input type="file" id="fileInput" style="display: none;">
+            <button class="attachment-button" id="attachmentButton">📎</button>
+        </div>
+    </div>
+
+    <div class="group-modal" id="groupModal">
+        <div class="modal-content">
+            <h2 id="groupModalTitle">Join or Create Group</h2>
+            <div id="joinGroupSection">
+                <input type="text" id="groupIdInput" placeholder="Enter Group ID">
+                <input type="text" id="yourNameGroup" placeholder="Your name">
+                <button id="joinGroupButton">Join Group</button>
+                <p>or <a href="#" id="createGroupLink">Create a new group</a></p>
+            </div>
+            <div id="createGroupSection" style="display: none;">
+                <input type="text" id="newGroupName" placeholder="Group name">
+                <input type="text" id="yourNameCreate" placeholder="Your name">
+                <button id="createGroupButton">Create Group</button>
+                <p>or <a href="#" id="joinGroupLink">Join existing group</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="invite-modal" id="inviteModal">
+        <div class="modal-content">
+            <h2>Invite Member</h2>
+            <input type="text" id="memberIdInput" placeholder="Enter user ID to invite">
+            <button id="sendInviteButton">Send Invite</button>
+            <button id="cancelInviteButton">Cancel</button>
+        </div>
+    </div>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/group-chat.js"></script>
+</body>
+</html>

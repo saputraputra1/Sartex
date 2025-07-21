@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Turbo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon.png">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Theme Toggle -->
+        <div class="theme-toggle">
+            <button id="themeToggleBtn">🌓</button>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <button class="nav-btn active" data-target="couple-chat">Pasangan</button>
+            <button class="nav-btn" data-target="group-chat">Grup</button>
+            <button class="nav-btn" data-target="private-chat">ID Privat</button>
+        </nav>
+
+        <!-- Login Section -->
+        <div id="login-section" class="section active">
+            <h2>Masuk ke WhatsApp Turbo</h2>
+            <div class="form-group">
+                <input type="text" id="userId" placeholder="ID Anda" required>
+                <input type="text" id="userName" placeholder="Nama Anda" required>
+                <button id="loginBtn">Masuk</button>
+            </div>
+            <div class="private-id-info">
+                <p>Atau gunakan <a href="#" id="generatePrivateId">ID Privat</a> untuk chat tanpa password</p>
+            </div>
+        </div>
+
+        <!-- Couple Chat Section -->
+        <div id="couple-chat" class="section">
+            <!-- Content loaded dynamically from couple-chat.js -->
+        </div>
+
+        <!-- Group Chat Section -->
+        <div id="group-chat" class="section">
+            <!-- Content loaded dynamically from group-chat.js -->
+        </div>
+
+        <!-- Private ID Chat Section -->
+        <div id="private-chat" class="section">
+            <!-- Content loaded dynamically from private-id-chat.js -->
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
+
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/couple-chat.js"></script>
+    <script src="js/group-chat.js"></script>
+    <script src="js/private-id-chat.js"></script>
+</body>
+</html>

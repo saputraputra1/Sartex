@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Couple Chat | WhatsApp Turbo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon.png">
+</head>
+<body class="light-mode">
+    <div class="app-container">
+        <header class="chat-header">
+            <button class="back-button" onclick="window.location='index.html'">←</button>
+            <div class="chat-info">
+                <h2 id="partnerName">Couple Chat</h2>
+                <p id="partnerStatus">Offline</p>
+            </div>
+            <button class="menu-button">⋮</button>
+        </header>
+        
+        <div class="chat-container" id="chatContainer">
+            <!-- Messages will appear here -->
+        </div>
+        
+        <div class="message-input-container">
+            <button class="emoji-button">😊</button>
+            <input type="text" id="messageInput" placeholder="Type a message...">
+            <button class="send-button" id="sendButton">➤</button>
+            <input type="file" id="fileInput" style="display: none;">
+            <button class="attachment-button" id="attachmentButton">📎</button>
+        </div>
+    </div>
+
+    <div class="login-modal" id="loginModal">
+        <div class="modal-content">
+            <h2>Couple Chat Login</h2>
+            <input type="text" id="coupleId" placeholder="Couple ID">
+            <input type="password" id="couplePassword" placeholder="Password">
+            <button id="loginButton">Login</button>
+            <p>Don't have an ID? <a href="#" id="createAccountLink">Create one</a></p>
+        </div>
+    </div>
+
+    <div class="create-modal" id="createModal">
+        <div class="modal-content">
+            <h2>Create Couple ID</h2>
+            <input type="text" id="newCoupleId" placeholder="Choose an ID">
+            <input type="password" id="newCouplePassword" placeholder="Choose a password">
+            <input type="text" id="yourName" placeholder="Your name">
+            <button id="createAccountButton">Create</button>
+            <p>Already have an ID? <a href="#" id="loginLink">Login</a></p>
+        </div>
+    </div>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/couple-chat.js"></script>
+</body>
+</html>

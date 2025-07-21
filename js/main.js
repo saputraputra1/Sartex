@@ -1,82 +1,76 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Navigation
-  const navButtons = document.querySelectorAll('.nav-btn');
-  const sections = document.querySelectorAll('.section');
-  
-  navButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const target = button.getAttribute('data-target');
-      
-      // Update active nav button
-      navButtons.forEach(btn => btn.classList.remove('active'));
-      button.classList.add('active');
-      
-      // Show target section
-      sections.forEach(section => {
-        section.classList.remove('active');
-        if (section.id === target) {
-          section.classList.add('active');
-        }
-      });
-    });
-  });
-  
-  // Login functionality
-  const loginBtn = document.getElementById('loginBtn');
-  const generatePrivateId = document.getElementById('generatePrivateId');
-  
-  loginBtn.addEventListener('click', handleLogin);
-  generatePrivateId.addEventListener('click', generatePrivateIdHandler);
+// Initialize the app when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'light-mode';
+    document.body.className = savedTheme;
+    
+    // Update theme toggle button
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.textContent = savedTheme === 'dark-mode' ? '☀️' : '🌙';
+    }
+    
+    // Initialize any other global functionality
+    initializePresence();
 });
 
-let currentUser = null;
-
-function handleLogin() {
-  const userId = document.getElementById('userId').value.trim();
-  const userName = document.getElementById('userName').value.trim();
-  
-  if (!userId || !userName) {
-    alert('ID dan Nama harus diisi!');
-    return;
-  }
-  
-  currentUser = {
-    id: userId,
-    name: userName
-  };
-  
-  // Set user online status
-  database.ref(`onlineStatus/${userId}`).set(true);
-  
-  // Handle beforeunload to set offline status
-  window.addEventListener('beforeunload', () => {
-    database.ref(`onlineStatus/${userId}`).set(false);
-  });
-  
-  // Hide login section
-  document.getElementById('login-section').classList.remove('active');
-  
-  // Initialize all chat modules
-  initCoupleChat(currentUser);
-  initGroupChat(currentUser);
-  initPrivateIdChat(currentUser);
-  
-  // Show couple chat by default
-  document.getElementById('couple-chat').classList.add('active');
+// Initialize presence system
+function initializePresence() {
+    const uid = localStorage.getItem('uid');
+    if (!uid) return;
+    
+    const userStatusRef = db.ref('/presence/' + uid);
+    const userStatusDatabaseRef = db.ref('/status/' + uid);
+    
+    // Set initial status
+    userStatusDatabaseRef.onDisconnect().set({
+        status: 'offline',
+        lastSeen: firebase.database.ServerValue.TIMESTAMP
+    }).then(() => {
+        userStatusDatabaseRef.set({
+            status: 'online',
+            lastSeen: firebase.database.ServerValue.TIMESTAMP
+        });
+    });
+    
+    // Update status when window is focused/blurred
+    window.addEventListener('focus', () => {
+        userStatusDatabaseRef.set({
+            status: 'online',
+            lastSeen: firebase.database.ServerValue.TIMESTAMP
+        });
+    });
+    
+    window.addEventListener('blur', () => {
+        userStatusDatabaseRef.set({
+            status: 'away',
+            lastSeen: firebase.database.ServerValue.TIMESTAMP
+        });
+    });
 }
 
-function generatePrivateIdHandler(e) {
-  e.preventDefault();
-  const privateId = generateRandomId(8);
-  document.getElementById('userId').value = privateId;
-  alert(`ID Privat Anda: ${privateId}\nSalin ID ini untuk digunakan nanti`);
+// Helper function to format timestamp
+function formatTimestamp(timestamp) {
+    if (!timestamp) return '';
+    
+    const date = new Date(timestamp);
+    const now = new Date();
+    
+    if (date.toDateString() === now.toDateString()) {
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } else if (date.getFullYear() === now.getFullYear()) {
+        return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
+    } else {
+        return date.toLocaleDateString([], { year: 'numeric', month: 'short', day: 'numeric' });
+    }
 }
 
-function generateRandomId(length) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
-  for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return result;
+// Helper function to generate random IDs
+function generateId(length = 8) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
 }

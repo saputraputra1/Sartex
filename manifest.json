@@ -1,11 +1,11 @@
 {
     "name": "WhatsApp Turbo",
-    "short_name": "WA Turbo",
-    "start_url": "/",
+    "short_name": "WATurbo",
+    "start_url": "index.html",
     "display": "standalone",
     "background_color": "#128C7E",
     "theme_color": "#128C7E",
-    "description": "Aplikasi chat modern berbasis Firebase",
+    "description": "A modern WhatsApp-like chat application",
     "icons": [
         {
             "src": "icon.png",
@@ -13,9 +13,10 @@
             "type": "image/png"
         },
         {
-            "src": "icon-large.png",
+            "src": "icon.png",
             "sizes": "512x512",
             "type": "image/png"
         }
-    ]
+    ],
+    "orientation": "portrait"
 }
